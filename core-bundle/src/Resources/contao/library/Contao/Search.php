@@ -138,7 +138,13 @@ class Search
 		unset($arrData['content']);
 
 		$arrMatches = array();
-		preg_match('/<\/head>/', $strContent, $arrMatches, PREG_OFFSET_CAPTURE);
+
+		// Return false if the </head> could not be found
+		if (!preg_match('/<\/head>/', $strContent, $arrMatches, PREG_OFFSET_CAPTURE))
+		{
+			return false;
+		}
+
 		$intOffset = \strlen($arrMatches[0][0]) + $arrMatches[0][1];
 
 		// Split page in head and body section
